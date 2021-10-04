@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <body>
+        {{range .Foos}}
+            <span>
+                <div style="display: flex;">
+                    <div style="align-self: center;">
+                        <img id="img1" src="{{ .Image}}" alt="">
+                    </div>
+                    <div style="padding: 20px;">
+                        <div>
+                            <div>Id: {{.Id}}</div>
+                            <div style="margin-top: 10px;">Name: {{ .Name}}</div>
+                            <div style="margin-top: 10px;">Members: {{ .Members}}</div>
+                            <div style="margin-top: 10px;">CreationDate: {{ .CreationDate}}</div>
+                            <div style="margin-top: 10px;">FirstAlbum: {{ .FirstAlbum}}</div>
+                            <div style="margin-top: 10px;">Locations: {{ .Locations}}</div>
+                            <div style="margin-top: 10px;">Concert Dates: {{ .ConcertDates}}</div>
+                            <div style="margin-top: 10px;">Relations: {{ .Relations}}</div>
+                        </div>
+                    </div>
+                </div>
+            </span>
+        {{end}}
+    </body>
+</head>
+<body>
+    
+</body>
+</html>
