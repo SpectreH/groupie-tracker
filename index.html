@@ -13,28 +13,24 @@
         <section class="hero">
             <h1 class="hero-title">GROUPIE TRACKER</h1>
         </section>
-        <section class="showcase">
-            <section class="showcase-wrapper">
+        <section class="showcase-wrapper">
+            <section class="showcase-inner">
             {{range .Foos}}
-            <span>
-                <div style="display: flex;">
-                    <div style="align-self: center;">
-                        <img id="img1" src="{{ .Image}}" alt="">
-                    </div>
-                    <div style="padding: 20px;">
-                        <div>
-                            <div>Id: {{.Id}}</div>
-                            <div style="margin-top: 10px;">Name: {{ .Name}}</div>
-                            <div style="margin-top: 10px;">Members: {{ .Members}}</div>
-                            <div style="margin-top: 10px;">CreationDate: {{ .CreationDate}}</div>
-                            <div style="margin-top: 10px;">FirstAlbum: {{ .FirstAlbum}}</div>
-                            <div style="margin-top: 10px;">Locations: {{ .Locations}}</div>
-                            <div style="margin-top: 10px;">Concert Dates: {{ .ConcertDates}}</div>
-                            <div style="margin-top: 10px;">Relations: {{ .Relations}}</div>
-                        </div>
-                    </div>
+            <article class="group-article">
+                <div class="group-article-image">
+                    <img id="img1" src="{{ .Image}}">
                 </div>
-            </span>
+                <div class="group-article-card">
+                    <div class="group-article-name">{{ .Name}}</div>
+                    <!-- <div>Id: {{.Id}}</div> -->
+                    <!-- <div style="margin-top: 10px;">Members: {{ .Members}}</div>
+                    <div style="margin-top: 10px;">CreationDate: {{ .CreationDate}}</div>
+                    <div style="margin-top: 10px;">FirstAlbum: {{ .FirstAlbum}}</div>
+                    <div style="margin-top: 10px;">Locations: {{ .Locations}}</div>
+                    <div style="margin-top: 10px;">Concert Dates: {{ .ConcertDates}}</div>
+                    <div style="margin-top: 10px;">Relations: {{ .Relations}}</div> -->
+                </div>
+            </article>
             {{end}}
         </section>
         </section>
