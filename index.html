@@ -4,9 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <body>
-        {{range .Foos}}
+    <link rel="stylesheet" href="/css/style.css"/>
+    <title>Groupie-Tracker</title>
+</head>
+<body>
+    <main>
+        <header class="header-main"></header>
+        <section class="hero">
+            <h1 class="hero-title">GROUPIE TRACKER</h1>
+        </section>
+        <section class="showcase">
+            <section class="showcase-wrapper">
+            {{range .Foos}}
             <span>
                 <div style="display: flex;">
                     <div style="align-self: center;">
@@ -26,10 +35,9 @@
                     </div>
                 </div>
             </span>
-        {{end}}
-    </body>
-</head>
-<body>
-    
+            {{end}}
+        </section>
+        </section>
+    </main>
 </body>
 </html>
