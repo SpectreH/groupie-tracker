@@ -55,7 +55,7 @@
                         </a>
                     </li>
                     <li class="header-list-element">
-                        <a href="/" class="header-list-element-link">
+                        <a href="/" id="random" data-amount="{{len .Groups}}" class="header-list-element-link" onclick="randomGroup()">
                             <span class="header-list-element-link-border">Random Group</span>
                         </a>
                     </li>
@@ -72,7 +72,7 @@
         </section>
         <section class="showcase-wrapper">
             <section class="showcase-inner">
-            {{range .Foos}}
+            {{range .Groups}}
             <article class="group-article">
                 <a href="/{{ .Id}}" style="text-decoration: none">
                     <div class="group-article-image">
@@ -80,13 +80,6 @@
                     </div>
                     <div class="group-article-card">
                         <div class="group-article-name" name="name">{{ .Name}}</div>
-                        <!-- <div>Id: {{.Id}}</div> -->
-                        <!-- <div style="margin-top: 10px;">Members: {{ .Members}}</div>
-                        <div style="margin-top: 10px;">CreationDate: {{ .CreationDate}}</div>
-                        <div style="margin-top: 10px;">FirstAlbum: {{ .FirstAlbum}}</div>
-                        <div style="margin-top: 10px;">Locations: {{ .Locations}}</div>
-                        <div style="margin-top: 10px;">Concert Dates: {{ .ConcertDates}}</div>
-                        <div style="margin-top: 10px;">Relations: {{ .Relations}}</div> -->
                     </div>
                     <div class="text-more">
                         <div>Show More</div>
@@ -97,4 +90,10 @@
         </section>
     </main>
 </body>
+<script>
+    function randomGroup() {
+        var max = document.getElementById("random").getAttribute("data-amount");
+        document.getElementById("random").href = Math.floor(Math.random() * max + 1);
+    }
+</script>
 </html>

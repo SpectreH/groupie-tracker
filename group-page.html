@@ -12,7 +12,7 @@
     <header class="header-main">
       <nav class="header-nav">
           <a href="/" class="header-link">
-              <svg width="60" height="60" fill="none" style="fill: rgb(51, 51, 51);">
+            <svg width="60" height="60" fill="none" style="fill: rgb(51, 51, 51);">
                   <path d="M60,5.979c0-0.553-0.447-1-1-1c-4.364,0-6.112,0.329-7,0.879c-0.888-0.55-2.636-0.879-7-0.879c-0.553,0-1,0.447-1,1
                   s0.447,1,1,1c5.037,0,5.869,0.474,5.986,0.587c0.015,0.05,0.015,0.21,0.014,0.327c0,0.002,0,0.085,0,0.086v6.539l-13.085,3.452
                   c-0.444,0.116-0.816,0.399-1.047,0.797c-0.231,0.398-0.293,0.861-0.174,1.306l0.946,3.532c-2.102-0.929-4.352-1.469-6.64-1.592
@@ -46,22 +46,22 @@
                   C7.479,0.059,7.002,0.505,7,1.057c0,0.003,0,0.006,0,0.009h0C7.001,1.183,7.001,1.343,7.005,1.36C6.869,1.506,6.037,1.979,1,1.979
                   c-0.553,0-1,0.447-1,1S0.447,3.979,1,3.979z"/>
                   <path d="M34.5,39.979c-2.481,0-4.5,2.019-4.5,4.5s2.019,4.5,4.5,4.5s4.5-2.019,4.5-4.5S36.981,39.979,34.5,39.979z"/>
-              </svg>
+            </svg>
           </a>
           <ul class="header-list">
               <li class="header-list-element">
-                  <a href="/" class="header-list-element-link">
-                      <span class="header-list-element-link-border">About</span>
-                  </a>
+                <a href="/" class="header-list-element-link">
+                  <span class="header-list-element-link-border">About</span>
+                </a>
               </li>
               <li class="header-list-element">
-                  <a href="/" class="header-list-element-link">
-                      <span class="header-list-element-link-border">Random Group</span>
-                  </a>
+                <a href="/" id="random" data-amount="{{.Lenght}}" class="header-list-element-link" onclick="randomGroup()">
+                  <span class="header-list-element-link-border">Random Group</span>
+                </a>
               </li>
               <li class="header-list-element">
                 <a href="/exit" class="header-list-element-link">
-                    <span class="header-list-element-link-border">Shutdown Server</span>
+                  <span class="header-list-element-link-border">Shutdown Server</span>
                 </a>
               </li>
           </ul>
@@ -98,13 +98,17 @@
                 <div class="group-info-section-first-album-date">{{ .FirstAlbum}}</div>
               </div>
             </div>
-            <!-- <div class="group-info-section">Locations: {{ .Locations}}</div>
-            <div class="group-info-section">Concert Dates: {{ .ConcertDates}}</div>
-            <div class="group-info-section">Relations: {{ .Relations}}</div> -->
+            <!-- <div class="group-info-section">Relations: {{ .Relations}}</div> -->
         </div>
         </article>
     </section>
     </section>
   </main>
 </body>
+<script>
+  function randomGroup() {
+    var max = document.getElementById("random").getAttribute("data-amount");
+    document.getElementById("random").href = Math.floor(Math.random() * max + 1);
+  }
+</script>
 </html>
