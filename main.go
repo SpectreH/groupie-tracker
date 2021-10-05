@@ -44,6 +44,9 @@ func main() {
 	css := http.FileServer(http.Dir("css"))
 	http.Handle("/css/", http.StripPrefix("/css/", css))
 
+	img := http.FileServer(http.Dir("img"))
+	http.Handle("/img/", http.StripPrefix("/img/", img))
+
 	http.HandleFunc("/", LoadMainPage(data))
 	http.HandleFunc("/exit", ShutdownServer)
 
