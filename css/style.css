@@ -33,6 +33,7 @@ h1.hero-title {
 }
 
 .group-article {
+  cursor: pointer;
   height: 320px;
   width: 240px;
   margin:5px 1.5% 5px 1.5%;
@@ -115,3 +116,5 @@ h1.hero-title {
   transition: 1s;
   font-size: 24px;
 }
+
+

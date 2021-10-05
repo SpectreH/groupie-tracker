@@ -17,25 +17,26 @@
             <section class="showcase-inner">
             {{range .Foos}}
             <article class="group-article">
-                <div class="group-article-image">
-                    <img id="img1" src="{{ .Image}}">
-                </div>
-                <div class="group-article-card">
-                    <div class="group-article-name">{{ .Name}}</div>
-                    <!-- <div>Id: {{.Id}}</div> -->
-                    <!-- <div style="margin-top: 10px;">Members: {{ .Members}}</div>
-                    <div style="margin-top: 10px;">CreationDate: {{ .CreationDate}}</div>
-                    <div style="margin-top: 10px;">FirstAlbum: {{ .FirstAlbum}}</div>
-                    <div style="margin-top: 10px;">Locations: {{ .Locations}}</div>
-                    <div style="margin-top: 10px;">Concert Dates: {{ .ConcertDates}}</div>
-                    <div style="margin-top: 10px;">Relations: {{ .Relations}}</div> -->
-                </div>
-                <div class="text-more">
-                    <div>Show More</div>
-                </div>
+                <a href="/{{ .Id}}" style="text-decoration: none">
+                    <div class="group-article-image">
+                        <img id="img1" src="{{ .Image}}">
+                    </div>
+                    <div class="group-article-card">
+                        <div class="group-article-name" name="name">{{ .Name}}</div>
+                        <!-- <div>Id: {{.Id}}</div> -->
+                        <!-- <div style="margin-top: 10px;">Members: {{ .Members}}</div>
+                        <div style="margin-top: 10px;">CreationDate: {{ .CreationDate}}</div>
+                        <div style="margin-top: 10px;">FirstAlbum: {{ .FirstAlbum}}</div>
+                        <div style="margin-top: 10px;">Locations: {{ .Locations}}</div>
+                        <div style="margin-top: 10px;">Concert Dates: {{ .ConcertDates}}</div>
+                        <div style="margin-top: 10px;">Relations: {{ .Relations}}</div> -->
+                    </div>
+                    <div class="text-more">
+                        <div>Show More</div>
+                    </div>
+                </a>
             </article>
             {{end}}
-        </section>
         </section>
     </main>
 </body>

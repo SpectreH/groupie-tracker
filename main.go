@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 )
 
 type Foo struct {
@@ -28,8 +29,8 @@ type Data struct {
 func main() {
 	data := ParseJsonData()
 
-	fs := http.FileServer(http.Dir("css"))
-	http.Handle("/css/", http.StripPrefix("/css/", fs))
+	css := http.FileServer(http.Dir("css"))
+	http.Handle("/css/", http.StripPrefix("/css/", css))
 
 	http.HandleFunc("/", LoadMainPage(data))
 	http.HandleFunc("/exit", ShutdownServer)
@@ -39,16 +40,33 @@ func main() {
 
 func LoadMainPage(data Data) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		templ, err := template.ParseFiles("index.html")
+		mainTempl, err := template.ParseFiles("index.html")
+		groupTempl, _ := template.ParseFiles("group-page.html")
 
 		if err != nil {
 			panic(err)
 		}
 
-		if err := templ.Execute(w, data); err != nil {
-			panic(err)
+		if id, err := strconv.Atoi(r.URL.Path[1:]); err == nil {
+			if 0 < id && id <= len(data.Foos) {
+				exactGroupData := data.Foos[id]
+
+				if err := groupTempl.Execute(w, exactGroupData); err != nil {
+					panic(err)
+				}
+
+				return
+			}
 		}
 
+		if r.URL.Path != "/" {
+			http.Error(w, "404 not found.", http.StatusNotFound)
+			return
+		}
+
+		if err := mainTempl.Execute(w, data); err != nil {
+			panic(err)
+		}
 	}
 }
 
