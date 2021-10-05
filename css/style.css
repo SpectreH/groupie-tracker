@@ -14,6 +14,7 @@ h1.hero-title {
   height: calc(50vh - 60px);
   text-align: center;
   position: relative;
+  color: #ff7300;
 
   font-size: 70px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -59,7 +60,7 @@ h1.hero-title {
 
 .text-more {
   font-weight: bold;
-  color: white;
+  color: #fc892a;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -115,6 +116,86 @@ h1.hero-title {
   opacity: 1;
   transition: 1s;
   font-size: 24px;
+}
+
+/* Group page style */
+
+.group-page-article {
+  height: 240px;
+  width: 750px;
+  display: inline-flex;
+  overflow: hidden;
+  margin-bottom: 50px;
+  background: rgb(60, 62, 68);
+  border-radius: 0.5rem;
+  box-shadow: rgb(0 0 0 / 10%) 0px 4px 6px -1px, rgb(0 0 0 / 6%) 0px 2px 4px -1px;
+}
+
+.group-page-article-image {
+  height: 240px;
+  width: 240px;
+}
+
+.group-page-article-card {
+  flex: 3 1 0%;
+  position: relative;
+  margin-left: 15px;
+  margin-right: 15px;
+  flex-direction: column;
+  color: white;
+  align-self: center;
+}
+
+h2 {
+  color: #ff7300;
+  font-size: 20px;
+  flex: none;
+}
+
+.group-info-section {
+  align-items: center;
+  flex: 1 1 0%;
+  display: flex;
+  font-size: 18px;
+  flex-direction: column;
+}
+
+.group-info-section-members {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  place-content: center;
+}
+
+.group-info-section-member {
+  text-align: center;
+  max-height: fit-content;
+  margin-right: 15px;
+}
+
+.group-info-section-creation {
+  display: flex;
+}
+
+.group-info-section-creation-date {
+  margin-top: 3px;
+  margin-left: 12px;
+  max-height: fit-content;
+  max-width: fit-content;
+  align-self: center;
+}
+
+.group-info-section-first-album {
+  display: flex;
+}
+
+.group-info-section-first-album-date {
+  margin-top: 3px;
+  margin-left: 12px;
+  max-height: fit-content;
+  max-width: fit-content;
+  align-self: center;
+  flex: none;
 }
 
 

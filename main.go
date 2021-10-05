@@ -49,7 +49,7 @@ func LoadMainPage(data Data) http.HandlerFunc {
 
 		if id, err := strconv.Atoi(r.URL.Path[1:]); err == nil {
 			if 0 < id && id <= len(data.Foos) {
-				exactGroupData := data.Foos[id]
+				exactGroupData := data.Foos[id-1]
 
 				if err := groupTempl.Execute(w, exactGroupData); err != nil {
 					panic(err)

@@ -4,9 +4,51 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <link rel="stylesheet" href="/css/style.css"/>
+  <title>Group - {{ .Name}}</title>
 </head>
 <body>
-  
+  <main>
+    <header class="header-main">
+      <section class="hero">
+        <h1 class="hero-title">{{ .Name}}</h1>
+      </section>
+      <section class="showcase-wrapper">
+        <section class="showcase-inner">
+          <article class="group-page-article">
+            <div class="group-page-article-image">
+              <img id="img1" src="{{ .Image}}">
+          </div>
+          <div class="group-page-article-card">
+            <div class="group-page-items"></div>
+              <div class="group-info-section">
+                <h2>Members:</h2>
+                <div class="group-info-section-members">
+                  {{range .Members}}
+                  <div class="group-info-section-member">{{.}}</div>
+                  {{end }}
+                </div>
+              </div>
+              <div class="group-info-section">
+                <div class="group-info-section-creation">
+                  <h2>Creation Date:</h2>
+                  <div class="group-info-section-creation-date">{{ .CreationDate}}</div>
+                </div>
+              </div>
+              <div class="group-info-section">
+                <div class="group-info-section-first-album">
+                  <h2>First Album:</h2>
+                  <div class="group-info-section-first-album-date">{{ .FirstAlbum}}</div>
+                </div>
+              </div>
+              <!-- <div class="group-info-section">Locations: {{ .Locations}}</div>
+              <div class="group-info-section">Concert Dates: {{ .ConcertDates}}</div>
+              <div class="group-info-section">Relations: {{ .Relations}}</div> -->
+          </div>
+          </article>
+      </section>
+      </section>
+    </header>
+  </main>
 </body>
 </html>
