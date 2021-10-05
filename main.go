@@ -26,7 +26,7 @@ type Group struct {
 
 type ConcertData struct {
 	Location Place
-	Date     string
+	Date     []string
 }
 
 type Place struct {
@@ -112,7 +112,8 @@ func ParseConcerts(base Data) Data {
 		}
 
 		for i, v := range tempMap["datesLocations"].(map[string]interface{}) {
-			tempDate := strings.Trim(fmt.Sprint(v), "[]")
+			tempDatesInOneString := strings.Trim(fmt.Sprint(v), "[]")
+			tempDates := strings.Split(tempDatesInOneString, " ")
 			tempSplited := strings.Split(i, "-")
 
 			tempSplited[0] = strings.Title(strings.Replace(tempSplited[0], "_", " ", -1))
@@ -120,7 +121,7 @@ func ParseConcerts(base Data) Data {
 
 			concertToAppend.Location.City = tempSplited[0]
 			concertToAppend.Location.Country = tempSplited[1]
-			concertToAppend.Date = tempDate
+			concertToAppend.Date = tempDates
 
 			allConcerts = append(allConcerts, concertToAppend)
 		}

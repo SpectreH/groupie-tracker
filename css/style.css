@@ -200,10 +200,32 @@ h1.hero-title {
   width: 750px;
   display: inline-flex;
   overflow: hidden;
-  margin-bottom: 50px;
   background: rgb(60, 62, 68);
   border-radius: 0.5rem;
   box-shadow: rgb(0 0 0 / 10%) 0px 4px 6px -1px, rgb(0 0 0 / 6%) 0px 2px 4px -1px;
+}
+
+.group-page-concert {
+  height: max-content;
+  width: 280px;
+  flex-flow: column;
+  overflow: hidden;
+  text-align: center;
+  margin: 5px 1.5% 5px 1.5%;
+  background: rgb(60, 62, 68);
+  border-radius: 0.5rem;
+  box-shadow: rgb(0 0 0 / 10%) 0px 4px 6px -1px, rgb(0 0 0 / 6%) 0px 2px 4px -1px;
+}
+
+.concerts-header {
+  color: white;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  font-size: 50px;
+}
+
+.concert-date {
+  color: white;
 }
 
 .group-page-article-image {
@@ -274,5 +296,4 @@ h2 {
   align-self: center;
   flex: none;
 }
-
 

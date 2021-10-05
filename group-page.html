@@ -66,12 +66,12 @@
               </li>
           </ul>
       </nav>
-  </header>
+    </header>
     <section class="hero">
       <h1 class="hero-title">{{ .Name}}</h1>
     </section>
     <section class="showcase-wrapper">
-      <section class="showcase-inner">
+      <section class="showcase-inner" style="flex-flow: column;">
         <article class="group-page-article">
           <div class="group-page-article-image">
             <img id="img1" src="{{ .Image}}">
@@ -98,9 +98,23 @@
                 <div class="group-info-section-first-album-date">{{ .FirstAlbum}}</div>
               </div>
             </div>
-            <!-- <div class="group-info-section">Relations: {{ .Relations}}</div> -->
         </div>
         </article>
+      <section class="showcase-inner">
+        <h1 class="concerts-header">Concerts:</h1>
+      </section>
+      <section class="showcase-inner">
+        {{range .Concerts}}
+          {{$City := .Location.City}}
+          {{$Country := .Location.Country}}
+          {{range .Date}}
+            <article class="group-page-concert">
+              <h2 class="concert-place">{{$Country}}, {{$City}}</h2>
+              <h2 class="concert-date">{{.}}</h2>
+            </article>
+          {{end}}
+        {{end}}
+      </section>
     </section>
     </section>
   </main>
