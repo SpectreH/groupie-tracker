@@ -313,6 +313,7 @@ h2 {
 /* Filter */
 
 .filters {
+  gap: 80px;
   min-height: 70px;
   display: flex;
   align-items: center;
@@ -322,10 +323,20 @@ h2 {
   font-weight: bolder;
 }
 
+.checkbox-filter {
+  border: 5px solid #f6931f;;
+  border-radius: 40px;
+}
+
+.checkbox-filter-struct {
+  margin: 20px 30px 20px 30px;
+}
+
 .filter {
-  min-width: 180px;
+  margin: 30px 35px 35px 30px;
+  min-width: 300px;
   max-width: fit-content;
-  margin: 5px 1.5% 5px 1.5%;
+  /* margin: 5px 1.5% 5px 1.5%; */
 }
 
 .filter-struct{
@@ -334,17 +345,26 @@ h2 {
 }
 
 .filter-amount-range {
+  background-color: white;
   width: 32px;
 }
 
 .filter-album-range, .filter-creation-range {
+  background-color: white;
   width: 84px;
 }
 
-.checkbox-filter {
+.tags {
+  margin-top: 15px;
   max-width: 350px;
-  max-height: 300px;
+  max-height: 220px;
   overflow: auto;
+}
+
+.range-filters {
+  border: 5px solid #f6931f;;
+  border-radius: 40px;
+  min-width: 240px;
 }
 
 .lable-place {

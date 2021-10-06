@@ -75,36 +75,43 @@
             <h1 class="hero-title">GROUPIE TRACKER</h1>
         </section>
         <section class="filters">
-            <section class="filter">
-                <div class="filter-struct">
-                    <label for="amount">Number Of Members:</label>
-                    <input class="filter-amount-range" type="text" id="amount" style="border:0; color:#f6931f; font-weight: bolder;" />
-                </div>
-                <div id="slider-range-amount"></div>
-                </div>
-            </section>
-            <section class="filter">
-                <div class="filter-struct">
-                    <label for="album">First Album Creation Date:</label>
-                    <input class="filter-album-range" type="text" id="album" style="border:0; color:#f6931f; font-weight: bolder;" />
-                </div>
-                <div id="slider-range-album"></div>
-                </div>
-            </section>
-            <section class="filter">
-                <div class="filter-struct">
-                    <label for="creation">Group Creation Date:</label>
-                    <input class="filter-creation-range" type="text" id="creation"
-                        style="border:0; color:#f6931f; font-weight: bolder;" />
-                </div>
-                <div id="slider-range-creation"></div>
-                </div>
+            <section class="range-filters">
+                <section class="filter">
+                    <div class="filter-struct">
+                        <label for="amount">Number Of Members:</label>
+                        <input disabled="disabled" class="filter-amount-range" type="text" id="amount"
+                            style="border:0; color:#f6931f; font-weight: bolder;" />
+                    </div>
+                    <div id="slider-range-amount"></div>
+                    </div>
+                </section>
+                <section class="filter">
+                    <div class="filter-struct">
+                        <label for="album">First Album Creation Date:</label>
+                        <input disabled="disabled" class="filter-album-range" type="text" id="album"
+                            style="border:0; color:#f6931f; font-weight: bolder;" />
+                    </div>
+                    <div id="slider-range-album"></div>
+                    </div>
+                </section>
+                <section class="filter">
+                    <div class="filter-struct">
+                        <label for="creation">Group Creation Date:</label>
+                        <input disabled="disabled" class="filter-creation-range" type="text" id="creation"
+                            style="border:0; color:#f6931f; font-weight: bolder;" />
+                    </div>
+                    <div id="slider-range-creation"></div>
+                    </div>
+                </section>
             </section>
             <section class="checkbox-filter">
-                <div class="tags">
-                    {{range .ConcertPlaces}}
-                    <label class="lable-place"><input type="checkbox" data-concert-places="{{.}}" /> {{.}} </label>
-                    {{end}}
+                <div class="checkbox-filter-struct">
+                    <label style="margin: 93px;">Concert Locations:</label>
+                    <div class="tags">
+                        {{range .ConcertPlaces}}
+                        <label class="lable-place"><input type="checkbox" data-concert-places="{{.}}" /> {{.}} </label>
+                        {{end}}
+                    </div>
                 </div>
             </section>
         </section>
@@ -134,9 +141,9 @@
     var minCreation, maxCreation;
 
     $(document).ready(function () {
-        initFilterMembers();
-        initFilterAlbum();
-        initFilterCreation();
+        InitFilterMembers();
+        InitFilterAlbum();
+        InitFilterCreation();
     });
 
     function ShowByFilter() {
@@ -201,7 +208,7 @@
         ShowByFilter();
     }
 
-    function initFilterMembers() {
+    function InitFilterMembers() {
         var options = {
             range: true,
             min: 1,
@@ -230,12 +237,12 @@
         Filter()
     };
 
-    function initFilterAlbum(){
+    function InitFilterAlbum(){
         var options = {
             range: true,
-            min: 1950,
-            max: 2021,
-            values: [1950, 2021],
+            min: 1963,
+            max: 2018,
+            values: [1963, 2018],
             slide: function (event, ui) {
                 var min = ui.values[0],
                     max = ui.values[1];
@@ -261,12 +268,12 @@
         Filter()
     };
 
-    function initFilterCreation() {
+    function InitFilterCreation() {
         var options = {
             range: true,
-            min: 1950,
-            max: 2021,
-            values: [1950, 2021],
+            min: 1958,
+            max: 2015,
+            values: [1958, 2015],
             slide: function (event, ui) {
                 var min = ui.values[0],
                     max = ui.values[1];
