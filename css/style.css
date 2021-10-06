@@ -1,3 +1,5 @@
+/* Main page */
+
 body {
   margin: 0px;
 }
@@ -322,7 +324,7 @@ h2 {
 
 .filter {
   min-width: 180px;
-  max-width: 250px;
+  max-width: fit-content;
   margin: 5px 1.5% 5px 1.5%;
 }
 
@@ -335,6 +337,16 @@ h2 {
   width: 32px;
 }
 
-.filter-album-range {
+.filter-album-range, .filter-creation-range {
   width: 84px;
+}
+
+.checkbox-filter {
+  max-width: 350px;
+  max-height: 300px;
+  overflow: auto;
+}
+
+.lable-place {
+  display: block;
 }

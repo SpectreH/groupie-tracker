@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -36,7 +37,8 @@ type Place struct {
 }
 
 type Data struct {
-	Groups []Group
+	Groups        []Group
+	ConcertPlaces []string
 }
 
 type Date struct {
@@ -110,6 +112,8 @@ func ParseJsonData() Data {
 }
 
 func ParseConcerts(base Data) Data {
+	var concertPlaces []string
+
 	for i := 0; i < len(base.Groups); i++ {
 		var concertToAppend ConcertData
 		var allConcerts []ConcertData
@@ -123,6 +127,8 @@ func ParseConcerts(base Data) Data {
 		}
 
 		for i, v := range tempMap["datesLocations"].(map[string]interface{}) {
+			var concertPlaceToAppend string
+
 			tempDatesInOneString := strings.Trim(fmt.Sprint(v), "[]")
 			tempDates := strings.Split(tempDatesInOneString, " ")
 			tempSplited := strings.Split(i, "-")
@@ -134,11 +140,18 @@ func ParseConcerts(base Data) Data {
 			concertToAppend.Location.Country = tempSplited[1]
 			concertToAppend.Date = tempDates
 
+			concertPlaceToAppend = tempSplited[0] + ", " + tempSplited[1]
+
 			allConcerts = append(allConcerts, concertToAppend)
+			concertPlaces = append(concertPlaces, concertPlaceToAppend)
 		}
 
+		concertPlaces = RemoveDuplicateStr(concertPlaces)
 		base.Groups[i].Concerts = allConcerts
 	}
+
+	sort.Strings(concertPlaces)
+	base.ConcertPlaces = concertPlaces
 
 	return base
 }
@@ -157,6 +170,18 @@ func ParseDates(base Data) Data {
 	}
 
 	return base
+}
+
+func RemoveDuplicateStr(strSlice []string) []string {
+	allKeys := make(map[string]bool)
+	list := []string{}
+	for _, item := range strSlice {
+		if _, value := allKeys[item]; !value {
+			allKeys[item] = true
+			list = append(list, item)
+		}
+	}
+	return list
 }
 
 func ShutdownServer(w http.ResponseWriter, r *http.Request) {

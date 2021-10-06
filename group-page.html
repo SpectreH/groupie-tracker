@@ -109,7 +109,7 @@
           {{$Country := .Location.Country}}
           {{range .Date}}
             <article class="group-page-concert">
-              <h2 class="concert-place">{{$Country}}, {{$City}}</h2>
+              <h2 class="concert-place">{{$City}}, {{$Country}}</h2>
               <h2 class="concert-date">{{.}}</h2>
             </article>
           {{end}}
