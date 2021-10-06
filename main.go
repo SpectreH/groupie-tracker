@@ -13,15 +13,16 @@ import (
 )
 
 type Group struct {
-	Id           int      `json:"id"`
-	Image        string   `json:"image"`
-	Name         string   `json:"name"`
-	Members      []string `json:"members"`
-	CreationDate int      `json:"creationDate"`
-	FirstAlbum   string   `json:"firstAlbum"`
-	Relations    string   `json:"relations"`
-	Concerts     []ConcertData
-	Lenght       int
+	Id            int      `json:"id"`
+	Image         string   `json:"image"`
+	Name          string   `json:"name"`
+	Members       []string `json:"members"`
+	CreationDate  int      `json:"creationDate"`
+	FirstAlbum    string   `json:"firstAlbum"`
+	Relations     string   `json:"relations"`
+	FirstAlbumSep Date
+	Concerts      []ConcertData
+	Lenght        int
 }
 
 type ConcertData struct {
@@ -36,6 +37,12 @@ type Place struct {
 
 type Data struct {
 	Groups []Group
+}
+
+type Date struct {
+	Day   int
+	Month int
+	Year  int
 }
 
 func main() {
@@ -97,6 +104,7 @@ func ParseJsonData() Data {
 	}
 
 	result = ParseConcerts(result)
+	result = ParseDates(result)
 
 	return result
 }
@@ -130,6 +138,22 @@ func ParseConcerts(base Data) Data {
 		}
 
 		base.Groups[i].Concerts = allConcerts
+	}
+
+	return base
+}
+
+func ParseDates(base Data) Data {
+	for i := 0; i < len(base.Groups); i++ {
+		var dateToAppend Date
+
+		tempDate := strings.Split(base.Groups[i].FirstAlbum, "-")
+
+		dateToAppend.Day, _ = strconv.Atoi(tempDate[0])
+		dateToAppend.Month, _ = strconv.Atoi(tempDate[1])
+		dateToAppend.Year, _ = strconv.Atoi(tempDate[2])
+
+		base.Groups[i].FirstAlbumSep = dateToAppend
 	}
 
 	return base

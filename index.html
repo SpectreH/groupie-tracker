@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="/css/style.css"/>
     <title>Groupie-Tracker</title>
 </head>
@@ -71,10 +74,28 @@
         <section class="hero">
             <h1 class="hero-title">GROUPIE TRACKER</h1>
         </section>
+        <section class="filters">
+            <section class="filter">
+                <div class="filter-struct">
+                    <label for="amount">Number Of Members:</label>
+                    <input class="filter-amount-range" type="text" id="amount" style="border:0; color:#f6931f; font-weight: bolder;" />
+                </div>
+                <div id="slider-range-amount"></div>
+                </div>
+            </section>
+            <section class="filter">
+                <div class="filter-struct">
+                    <label for="album">Creation Date:</label>
+                    <input class="filter-album-range" type="text" id="album" style="border:0; color:#f6931f; font-weight: bolder;" />
+                </div>
+                <div id="slider-range-album"></div>
+                </div>
+            </section>
+        </section>
         <section class="showcase-wrapper">
-            <section class="showcase-inner">
+            <section class="showcase-inner" id="groups" style="min-height: 500px;">
             {{range .Groups}}
-            <article class="group-article">
+            <article class="group-article" data-album-creation-year="{{ .FirstAlbumSep.Year}}" data-group-creation-year="{{ .CreationDate}}" data-members-counter="{{len .Members}}">
                 <a href="/{{ .Id}}" style="text-decoration: none">
                     <div class="group-article-image">
                         <img id="img1" src="{{ .Image}}">
@@ -92,6 +113,83 @@
     </main>
 </body>
 <script>
+    var minMembers, maxMembers;
+    var minAlbum, maxAlbum;
+
+    $(document).ready(function () {
+        initFilterMembers();
+        initFilterAlbum();
+    });
+
+    function Filter() {
+        $("#groups article").hide().filter(function () {
+            var members = parseInt($(this).data("members-counter"), 10);
+            var album = parseInt($(this).data("album-creation-year"), 10);
+            return (members >= minMembers && members <= maxMembers) && (album >= minAlbum && album <= maxAlbum);
+        }).show(); 
+    }
+
+    function initFilterMembers() {
+        var options = {
+            range: true,
+            min: 1,
+            max: 8,
+            values: [1, 8],
+            slide: function (event, ui) {
+                var min = ui.values[0],
+                    max = ui.values[1];
+
+                $("#amount").val(min + " - " + max);
+
+                minMembers = min
+                maxMembers = max
+
+                Filter()
+            }
+        }, min, max;
+
+        $("#slider-range-amount").slider(options);
+        min = $("#slider-range-amount").slider("values", 0);
+        max = $("#slider-range-amount").slider("values", 1);
+
+        $("#amount").val(min + " - " + max);
+        minMembers = min
+        maxMembers = max
+        Filter()
+    };
+
+    function initFilterAlbum(){
+        var options = {
+            range: true,
+            min: 1950,
+            max: 2021,
+            values: [1950, 2021],
+            slide: function (event, ui) {
+                var min = ui.values[0],
+                    max = ui.values[1];
+
+                $("#album").val(min + " - " + max);
+
+                minAlbum = min
+                maxAlbum = max
+
+                Filter()
+            }
+        }, min, max;
+
+        $("#slider-range-album").slider(options);
+
+        min = $("#slider-range-album").slider("values", 0);
+        max = $("#slider-range-album").slider("values", 1);
+
+        $("#album").val(min + " - " + max);
+
+        minAlbum = min
+        maxAlbum = max
+        Filter()
+    };
+
+
     function randomGroup() {
         var max = document.getElementById("random").getAttribute("data-amount");
         document.getElementById("random").href = Math.floor(Math.random() * max + 1);
