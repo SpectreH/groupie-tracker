@@ -14,16 +14,17 @@ import (
 )
 
 type Group struct {
-	Id            int      `json:"id"`
-	Image         string   `json:"image"`
-	Name          string   `json:"name"`
-	Members       []string `json:"members"`
-	CreationDate  int      `json:"creationDate"`
-	FirstAlbum    string   `json:"firstAlbum"`
-	Relations     string   `json:"relations"`
-	FirstAlbumSep Date
-	Concerts      []ConcertData
-	Lenght        int
+	Id                             int      `json:"id"`
+	Image                          string   `json:"image"`
+	Name                           string   `json:"name"`
+	Members                        []string `json:"members"`
+	CreationDate                   int      `json:"creationDate"`
+	FirstAlbum                     string   `json:"firstAlbum"`
+	Relations                      string   `json:"relations"`
+	FirstAlbumSep                  Date
+	Concerts                       []ConcertData
+	InStandardSintConcertLocations []string
+	Lenght                         int
 }
 
 type ConcertData struct {
@@ -37,8 +38,9 @@ type Place struct {
 }
 
 type Data struct {
-	Groups        []Group
-	ConcertPlaces []string
+	Groups                  []Group
+	ConcertPlaces           []string
+	InStandardSintLocations []string
 }
 
 type Date struct {
@@ -56,19 +58,29 @@ func main() {
 	img := http.FileServer(http.Dir("img"))
 	http.Handle("/img/", http.StripPrefix("/img/", img))
 
-	http.HandleFunc("/", LoadMainPage(data))
+	http.HandleFunc("/", LoadPage(data))
+	http.HandleFunc("/search", LoadPage(data))
 	http.HandleFunc("/exit", ShutdownServer)
 
 	log.Panic(http.ListenAndServe(":3030", nil))
 }
 
-func LoadMainPage(data Data) http.HandlerFunc {
+func LoadPage(data Data) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		mainTempl, err := template.ParseFiles("index.html")
 		groupTempl, _ := template.ParseFiles("group-page.html")
+		searchTempl, _ := template.ParseFiles("search.html")
 
 		if err != nil {
 			panic(err)
+		}
+
+		if r.URL.Path == "/search" {
+			if err := searchTempl.Execute(w, data); err != nil {
+				panic(err)
+			}
+
+			return
 		}
 
 		if id, err := strconv.Atoi(r.URL.Path[1:]); err == nil {
@@ -113,9 +125,11 @@ func ParseJsonData() Data {
 
 func ParseConcerts(base Data) Data {
 	var concertPlaces []string
+	var standSintlocations []string
 
 	for i := 0; i < len(base.Groups); i++ {
 		var concertToAppend ConcertData
+		var standSintConcerts []string
 		var allConcerts []ConcertData
 		var tempMap map[string]interface{}
 
@@ -129,29 +143,37 @@ func ParseConcerts(base Data) Data {
 		for i, v := range tempMap["datesLocations"].(map[string]interface{}) {
 			var concertPlaceToAppend string
 
+			standSintConcerts = append(standSintConcerts, i)
+
 			tempDatesInOneString := strings.Trim(fmt.Sprint(v), "[]")
 			tempDates := strings.Split(tempDatesInOneString, " ")
-			tempSplited := strings.Split(i, "-")
+			tempLocationSplited := strings.Split(i, "-")
 
-			tempSplited[0] = strings.Title(strings.Replace(tempSplited[0], "_", " ", -1))
-			tempSplited[1] = strings.ToUpper(strings.Replace(tempSplited[1], "_", " ", -1))
+			tempLocationSplited[0] = strings.Title(strings.Replace(tempLocationSplited[0], "_", " ", -1))
+			tempLocationSplited[1] = strings.ToUpper(strings.Replace(tempLocationSplited[1], "_", " ", -1))
 
-			concertToAppend.Location.City = tempSplited[0]
-			concertToAppend.Location.Country = tempSplited[1]
+			concertToAppend.Location.City = tempLocationSplited[0]
+			concertToAppend.Location.Country = tempLocationSplited[1]
 			concertToAppend.Date = tempDates
 
-			concertPlaceToAppend = tempSplited[0] + ", " + tempSplited[1]
+			concertPlaceToAppend = tempLocationSplited[0] + ", " + tempLocationSplited[1]
 
 			allConcerts = append(allConcerts, concertToAppend)
 			concertPlaces = append(concertPlaces, concertPlaceToAppend)
+			standSintlocations = append(standSintlocations, i)
 		}
 
 		concertPlaces = RemoveDuplicateStr(concertPlaces)
+		standSintlocations = RemoveDuplicateStr(standSintlocations)
+		standSintConcerts = RemoveDuplicateStr(standSintConcerts)
+
+		base.Groups[i].InStandardSintConcertLocations = standSintConcerts
 		base.Groups[i].Concerts = allConcerts
 	}
 
 	sort.Strings(concertPlaces)
 	base.ConcertPlaces = concertPlaces
+	base.InStandardSintLocations = standSintlocations
 
 	return base
 }
