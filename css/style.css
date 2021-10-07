@@ -4,8 +4,12 @@ body {
   margin: 0px;
 }
 
+a {
+  text-decoration: none;
+}
+
 .hero {
-    background-image: linear-gradient(to top, rgba(255,255,255,1) 1%,rgba(255,255,255,0), rgb(255,255,255,1)), url("../img/BG.jpg");
+    background-image: linear-gradient(to top, rgba(255,255,255,1) 2%,rgba(255,255,255,0), rgb(255,255,255,1)), url("../img/BG.jpg");
     background-size: cover;
     background-color: transparent;
     overflow: overlay;
@@ -32,18 +36,18 @@ h1.hero-title {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.showcase-wrapper {
-  margin-top: 5rem;
-  padding-bottom: 4.5rem;
-  background: linear-gradient(to bottom, rgba(255,0,0,0) 10%, rgb(36, 40, 47));
-  
-}
-
 .showcase-inner {
+  gap: 20px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   place-content: center;
+}
+
+.showcase-inner-background {
+  width: 100%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0.1%, rgb(36, 40, 47));
+  padding-bottom: 4.5rem;
 }
 
 .group-article {
@@ -208,6 +212,7 @@ h1.hero-title {
 /* Group page style */
 
 .group-page-article {
+  margin-top: 50px;
   height: 240px;
   width: 750px;
   display: inline-flex;
@@ -230,7 +235,7 @@ h1.hero-title {
 }
 
 .concerts-header {
-  color: white;
+  color: #ff7300;
   margin-top: 50px;
   margin-bottom: 50px;
   font-size: 50px;
@@ -310,9 +315,61 @@ h2 {
   flex: none;
 }
 
+.concert-box {
+  transition: 1s;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.concert-place, .concert-date {
+  opacity: 1;
+  transition: 1s;
+}
+
+.concert-box:hover .concert-place{
+  transition: 1s;
+  opacity: 0.3;
+  transform: scale(1.03);
+}
+
+.concert-box:hover .concert-date{
+  transition: 1s;
+  opacity: 0.3;
+  transform: scale(1.03);
+}
+
+.concert-box:hover {
+  transition: 1s;
+  transform: scale(1.03);
+}
+
+.concert-box:hover .text-more{ 
+  opacity: 1;
+  transition: 1s;
+  font-size: 21px;
+}
+
+.showcase-inner-map {
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  place-content: center;
+}
+
+/* Set the size of the div element that contains the map */
+#map {
+  height: 500px;
+  /* The height is 400 pixels */
+  width: 700px;
+  /* The width is the width of the web page */
+}
+
+
+
 /* Filter */
 
 .filters {
+  margin: 5rem 0 5rem 0;
   gap: 80px;
   min-height: 70px;
   display: flex;

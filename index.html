@@ -116,10 +116,10 @@
             </section>
         </section>
         <section class="showcase-wrapper">
-            <section class="showcase-inner" id="groups" style="min-height: 500px;">
+            <section class="showcase-inner" id="groups" style="min-height: 500px; background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0.1%, rgb(36, 40, 47));">
             {{range .Groups}}
             <article class="group-article" check-box-filter="false" range-filter="false" data-album-creation-year="{{ .FirstAlbumSep.Year}}" data-group-creation-year="{{ .CreationDate}}" data-members-counter="{{len .Members}}" data-concert-places="{{range .Concerts}}{{ .Location.City}}, {{ .Location.Country}};{{end}}">
-                <a href="/{{ .Id}}" style="text-decoration: none">
+                <a href="/{{ .Id}}">
                     <div class="group-article-image">
                         <img id="img1" src="{{ .Image}}">
                     </div>
@@ -313,7 +313,7 @@
         var selector = $('input:checked').map(function () {
             return $(this).attr('data-concert-places');
         }).get();
-        console.log(selector);
+        // console.log(selector);
         function filterCategories(elem) {
             var elemCats = elem.attr('data-concert-places');
 
