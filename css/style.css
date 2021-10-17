@@ -133,7 +133,7 @@ h1.hero-title {
 .group-article:hover .text-more{ 
   opacity: 1;
   transition: 1s;
-  font-size: 24px;
+  font-size: 22px;
 }
 
 /* Header style */
