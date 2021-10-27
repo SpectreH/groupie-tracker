@@ -2,7 +2,7 @@
 
 ## About The Project
 Groupie Trackers consists on receiving a given API and manipulate the data contained in it, in order to create a site, displaying the information.
-Use [API](https://groupietrackers.herokuapp.com/api) 
+This [API](https://groupietrackers.herokuapp.com/api) was in use.
 
 ## Installation
 ```
