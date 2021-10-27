@@ -14,7 +14,8 @@ cd groupie-tracker
 go run .
 http://localhost:3030
 ```
-Available features:
+## Available features:
+
 * Range and check box filter
 * Filter the artists/bands by creation date, first album date, number of members and locations of concerts
 * Using Map API to place markers for the concerts locations of a certain artist/band on a map
