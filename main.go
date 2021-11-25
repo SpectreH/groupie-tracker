@@ -62,6 +62,7 @@ func main() {
 	http.HandleFunc("/search", LoadPage(data))
 	http.HandleFunc("/exit", ShutdownServer)
 
+	fmt.Println("Server is listening on port 3030...")
 	log.Panic(http.ListenAndServe(":3030", nil))
 }
 
@@ -100,6 +101,8 @@ func LoadPage(data Data) http.HandlerFunc {
 			http.Error(w, "404 not found.", http.StatusNotFound)
 			return
 		}
+
+		fmt.Println("Test")
 
 		if err := mainTempl.Execute(w, data); err != nil {
 			panic(err)

@@ -1,6 +1,8 @@
 /* Main page */
 
 body {
+  min-width: 1280px;
+  min-height: 720px;
   margin: 0px;
 }
 
@@ -22,6 +24,7 @@ a {
     height: calc(50vh - 60px);
     text-align: center;
     position: relative;
+	min-height: 300px;
 }
 
 h1.hero-title {
