@@ -5,6 +5,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript" src="/js/group.js"></script>
+  <script type="text/javascript" src="/js/random.js"></script>
   <link rel="stylesheet" href="/css/style.css"/>
   <title>Group - {{ .Name}}</title>
 </head>
@@ -56,7 +58,7 @@
                 </a>
               </li>
               <li class="header-list-element">
-                <a href="/" id="random" data-amount="{{.Lenght}}" class="header-list-element-link" onclick="randomGroup()">
+                <a href="/" id="random" data-amount="{{.Lenght}}" class="header-list-element-link" onclick="RandomGroup()">
                   <span class="header-list-element-link-border">Random Group</span>
                 </a>
               </li>
@@ -139,70 +141,5 @@
   </main>
 </body>
 <script>
-  function randomGroup() {
-    var max = document.getElementById("random").getAttribute("data-amount");
-    document.getElementById("random").href = Math.floor(Math.random() * max + 1);
-  }
-
-  let map
-  let allConcerts
-  let geocoder
-
-  // Initialize and add the map
-  function initMap() {
-    allConcerts = document.getElementsByClassName("concert-place");
-    geocoder = new google.maps.Geocoder();
-
-    // The map, centered at exact place
-    map = new google.maps.Map(document.getElementById("map"), {
-      center: new google.maps.LatLng(0, 0),
-      zoom: 1,
-    });
-
-    LoadMarks()
-  }
-
-  function LoadMarks() {
-    let x = 0
-
-      var markerInterval = setInterval(function() 
-      { 
-        console.log(x)
-        if (x < allConcerts.length) 
-        {
-          console.log(allConcerts.length)
-          var address = allConcerts[x].innerHTML
-          geocoder.geocode({ 'address': address }, function (results, status) 
-          {
-              if (status == google.maps.GeocoderStatus.OK) {
-                  const concertPlace = { lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng() };
-
-                  new google.maps.Marker({
-                    position: concertPlace,
-                    map: map,
-                  });
-              } else {
-                console.log(status)
-              }
-          });
-        } else {
-          clearInterval(markerInterval);
-        } 
-
-        x++;
-      }, 450);
-  }
-
-  function GoToConcert(address) {
-    var geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ 'address': address }, function (results, status) {
-          if (status == google.maps.GeocoderStatus.OK) {
-              const concertPlace = { lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng() };
-
-              map.setCenter(concertPlace);
-              map.setZoom(7);
-          }
-      });
-  }
 </script>
 </html>

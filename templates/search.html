@@ -6,6 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" src="/js/random.js"></script>
   <link rel="stylesheet" href="/css/style.css" />
   <title>Group Search Page</title>
 </head>
@@ -58,7 +60,7 @@
             </a>
           </li>
           <li class="header-list-element">
-            <a href="/" id="random" data-amount="{{len .Groups}}" class="header-list-element-link" onclick="randomGroup()">
+            <a href="/" id="random" data-amount="{{len .GroupsData.Groups}}" class="header-list-element-link" onclick="RandomGroup()">
               <span class="header-list-element-link-border">Random Group</span>
             </a>
           </li>
@@ -74,9 +76,9 @@
       <h1 class="hero-title">SEARCH</h1>
     </section>
     <section class="showcase-inner" style="margin-bottom: 20px; flex-flow: column;">
-      <input type="text" id="myInput" onkeyup="showData()" placeholder="Search for..." title="Type something">
+      <input type="text" id="myInput" onkeyup="ShowData()" placeholder="Search for..." title="Type something">
       <section class="time-to-chose">
-        <select id="category-selector" name="language" onchange="showData()">
+        <select id="category-selector" name="language" onchange="ShowData()">
           <option value="All">All</option>
           <option value="Artist/Band">Artist/Band</option>
           <option value="Members">Members</option>
@@ -84,7 +86,7 @@
           <option value="First Album Date">First Album Date</option>
           <option value="Creation Date">Creation Date</option>
         </select>
-        <input id="exact-search-checkbox" type="checkbox" oninput="showData()" disabled> Exact Artist/Band Search
+        <input id="exact-search-checkbox" type="checkbox" oninput="ShowData()" disabled> Exact Artist/Band Search
       </section>
     </section>
     <section class="showcase-inner" style="background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0.1%, rgb(36, 40, 47)); min-height: 570px; padding-bottom: 50px;">
@@ -92,7 +94,7 @@
       <section id="groups-section" class="all-groups">
         <h2>Artists/Bands</h2>
         <section class="list-elements">
-        {{range .Groups}}
+        {{range .GroupsData.Groups}}
         <li><a class="groups" href="/{{.Id}}" data-creation="{{ .CreationDate}}" data-album="{{.FirstAlbum}}"
             data-concerts="{{ .InStandardSintConcertLocations}}" data-members="{{ .Members}}">{{ .Name}} - artist/band</a></li>
         {{end}}
@@ -101,19 +103,19 @@
       <section id="members-section" class="all-people">
         <h2>Members</h2>
         <section class="list-elements">
-          {{range .Groups}}
-          {{$id:=.Id}}
-          {{$groupName:=.Name}}
-          {{range .Members}}
+          {{range .GroupsData.Groups}}
+            {{$id:=.Id}}
+            {{$groupName:=.Name}}
+            {{range .Members}}
           <li><a class="members" href="/{{$id}}">{{.}} - member of {{$groupName}}</a></li>
-          {{end}}
+            {{end}}
           {{end}}
         </section>
       </section>
       <section id="locations-section" class="all-groups">
         <h2>Locations</h2>
         <section class="list-elements">
-          {{range .InStandardSintLocations}}
+          {{range .GroupsData.InStandardSintLocations}}
           <li><a class="locations" href="#">{{.}}</a></li>
           {{end}}
         </section>
@@ -123,160 +125,5 @@
   </main>
 </body>
 <script>
-  function randomGroup() {
-    var max = document.getElementById("random").getAttribute("data-amount");
-    document.getElementById("random").href = Math.floor(Math.random() * max + 1);
-  }
-
-  function CheckStyle() {
-    var groupSection = document.getElementById("groups-section");
-    var memberSection = document.getElementById("members-section");
-    var locationSection = document.getElementById("locations-section");
-
-    sectionArray = [groupSection, memberSection, locationSection]
-
-    for (var i = 0; i < 3; i++) 
-    {
-      var toDisplay = true
-      for (var k = 0; k < sectionArray[i].getElementsByTagName("li").length; k++)
-      {
-        if (sectionArray[i].getElementsByTagName("li")[k].style.display == "none")
-        {
-          toDisplay = false
-          continue
-        } else {
-          toDisplay = true
-          break
-        }
-      }
-
-      if (toDisplay)
-      {
-        sectionArray[i].style.display = "block";
-      } else {
-        console.log("test")
-        sectionArray[i].style.display = "none";
-      }
-    }
-  } 
-
-  function showData() {
-    var input, filter, ul, li, a, i, txtValue, selection, exactSearch;
-    selection = document.getElementById('category-selector').value;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    ul = document.getElementById("myUL");
-    li = ul.getElementsByTagName("li");
-
-    (selection != "Artist/Band") ? document.getElementById("exact-search-checkbox").disabled = true : document.getElementById("exact-search-checkbox").disabled = false
-
-    exactSearch = document.getElementById("exact-search-checkbox").checked;
-    for (i = 0; i < li.length; i++) {
-      a = li[i].getElementsByTagName("a")[0];
-      if (a.attributes.length != 2) {
-        var attributesValues = [a.attributes[2].value, a.attributes[3].value, a.attributes[4].value, a.attributes[5].value]
-      }
-
-      txtValue = a.textContent || a.innerText;
-
-      if (selection == "Artist/Band") 
-      {
-        if (a.attributes[0].value == "groups") 
-        {
-          if (exactSearch) 
-          {
-            txtValue.toUpperCase().indexOf(filter) == 0 ? li[i].style.display = "" : li[i].style.display = "none";
-            continue
-          }
-
-          txtValue.toUpperCase().indexOf(filter) > -1 ? li[i].style.display = "" : li[i].style.display = "none"; 
-          continue
-        } 
-        else 
-        {
-          li[i].style.display = "none";
-          continue
-        }
-      } 
-      else if (selection == "Members") {
-        if (a.attributes[0].value == "groups" || a.attributes[0].value == "members") {
-          if (attributesValues != null)
-          {
-            attributesValues[3].toString().toUpperCase().indexOf(filter) > -1 ? li[i].style.display = "" : li[i].style.display = "none"
-            continue
-          }
-
-          txtValue.toUpperCase().indexOf(filter) > -1 ? li[i].style.display = "" : li[i].style.display = "none";
-          continue
-        }
-        else {
-          li[i].style.display = "none";
-          continue
-        }
-      }
-      else if (selection == "Locations") {
-        if (a.attributes[0].value == "groups") {
-          attributesValues[2].toString().toUpperCase().indexOf(filter) > -1 ? li[i].style.display = "" : li[i].style.display = "none"
-          continue
-        } 
-        else if (a.attributes[0].value == "locations")
-        {
-          txtValue.toUpperCase().indexOf(filter) > -1 ? li[i].style.display = "" : li[i].style.display = "none";
-          continue
-        }
-        else 
-        {
-          li[i].style.display = "none";
-          continue
-        }
-      } 
-      else if (selection == "First Album Date") {
-        if (a.attributes[0].value == "groups") {
-          attributesValues[1].toString().toUpperCase().indexOf(filter) > -1 ? li[i].style.display = "" : li[i].style.display = "none"
-          continue
-        }
-        else 
-        {
-          li[i].style.display = "none";
-          continue
-        }
-      }
-      else if (selection == "Creation Date") {
-        if (a.attributes[0].value == "groups") {
-          attributesValues[0].toString().toUpperCase().indexOf(filter) > -1 ? li[i].style.display = "" : li[i].style.display = "none"
-          continue
-        }
-        else {
-          li[i].style.display = "none";
-          continue
-        }
-      }
-
-
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        li[i].style.display = "";
-      } else {
-        if (attributesValues != null) 
-        {
-          var found = false
-
-          for (var m = 0; m < 4; m++) 
-          {
-            if (attributesValues[m].toString().toUpperCase().indexOf(filter) > -1) {
-              li[i].style.display = "";
-              found = true
-              break
-            }
-          }
-
-          if (found == true) continue;
-        } 
-
-        li[i].style.display = "none";
-      }
-    }
-
-    CheckStyle()
-  }
 </script>
 </html>
